@@ -89,7 +89,7 @@ const Navbar = () => {
 
       {/* Mobile dropdown menu */}
       {menuOpen && (
-        <ul className="md:hidden bg-white w-full py-3 px-4 space-y-3">
+        <ul className="lg:hidden bg-white w-full py-3 px-4 space-y-3">
           {pages.map((page, index) => (
             <li key={index} className="text-black font-bold hover:text-[#2E6431]">
               <Link href={page.path} onClick={() => setMenuOpen(false)}>
