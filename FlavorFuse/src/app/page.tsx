@@ -5,6 +5,7 @@ import { useState } from "react";
 import RegistrationModal from "./registration-modal/RegistrationModal";
 import PopularRecipes from "./popular-recipes/page";
 import FaqComponent from "./FAQs/page";
+import Image from "next/image";
 
 
 
@@ -40,32 +41,32 @@ export default function Home() {
       {/* Hero sekcija */}
       <div className="relative flex flex-col items-center justify-center text-center my-16">
         {/* Slike sa strane */}
-        <img
+        <Image
           src="/images/list.png"
           alt="cvijet"
           className="absolute top-[50px] left-[50px] w-24"
         />
-        <img
+        <Image
           src="/images/naranca.png"
           alt="Naranča"
           className="absolute top-[0px] left-[200px] w-24"
         />
-        <img
+        <Image
           src="/images/cvijet.png"
           alt="Bosiljak"
           className="absolute bottom-[-50px] left-[150px] w-24"
         />
-        <img
+        <Image
           src="/images/prilog.png"
           alt="prilog"
           className="absolute top-[-50px] right-[150px] w-40"
         />
-        <img
+        <Image
           src="/images/avokado.png"
           alt="Avokado"
           className="absolute top-[50px] right-[50px] w-24"
         />
-        <img
+        <Image
           src="/images/meso.png"
           alt="meso"
           className="absolute bottom-[-50px] right-[100px] w-28"

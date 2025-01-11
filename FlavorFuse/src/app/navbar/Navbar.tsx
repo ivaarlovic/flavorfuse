@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 
 type Page = {
   title: string;
@@ -24,7 +25,7 @@ function processPage(page: Page, index: number) {
       }`}
     >
       {page.title === "FlavorFuse" ? (
-        <img
+        <Image
           src="/images/FlavorFuse-dark-logo.png" 
           alt="FlavorFuse"
           className="h-14 w-auto"

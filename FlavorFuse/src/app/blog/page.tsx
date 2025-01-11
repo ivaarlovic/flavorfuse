@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 
 export type Recipe = {
   id: number;
@@ -26,7 +27,7 @@ function processRecipe(recipe: Recipe) {
         href={`/blog/${id}`}
         className="block p-6  rounded-lg  shadow-md  transition-colors duration-200"
       >
-        <img src={image} alt={title} className="mb-2 w-full h-40 object-cover rounded-lg" />
+        <Image src={image} alt={title} className="mb-2 w-full h-40 object-cover rounded-lg" />
         <div className="p-4">
           <h2 className="text-xl font-bold text-gray-900">{title}</h2>
           <p className="text-gray-700 mt-2">Click to read more...</p>

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import type { Recipe } from "../page";
 import './page.css';
 
@@ -26,7 +27,7 @@ BlogPostProps) {
           className="inline-flex items-center text-gray-600 hover:text-gray-900 transition-colors duration-200 mb-6"
       ></Link>
       <h1 className="text-3xl font-bold">{title}</h1>
-      <img src={image} alt={title} className="my-4 w-full h-60 object-cover rounded-lg" />
+      <Image src={image} alt={title} className="my-4 w-full h-60 object-cover rounded-lg" />
       <p>{instructions}</p>
     </main>
   );

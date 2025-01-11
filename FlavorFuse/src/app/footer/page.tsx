@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import Link from 'next/link';
 import '@fortawesome/fontawesome-free';
 
@@ -8,7 +9,7 @@ export default function FooterComponent() {
       <div className="container mx-auto px-4 flex flex-col md:flex-row justify-between items-center">
         <div className="flex items-center space-x-4">
           <Link href="/">
-          <img src="/images/FlavorFuse-dark-logo.png" alt="FlavorFuse Logo" className="h-10 m-4" />
+          <Image src="/images/FlavorFuse-dark-logo.png" alt="FlavorFuse Logo" className="h-10 m-4" />
           </Link>
         </div>
         <div className="text-center md:text-left mt-4 md:mt-0">
