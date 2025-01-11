@@ -20,6 +20,7 @@ export default function PopularRecipes() {
             <section className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 px-4">
                 {popularRecipes.map((recipe, index) => (
                     <Link
+                        key={index}
                         href={recipe.path}
                         className="text-center text-xl font-bold drop-shadow-md text-[#fde4b5] uppercase"
                     >
