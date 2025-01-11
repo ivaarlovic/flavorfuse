@@ -7,10 +7,6 @@ export type Recipe = {
   instructions: string;
 };
 
-type BlogPageProps = {
-  searchParams: { page: string };
-};
-
 // Dohvat svih postova
 async function getRecipes(): Promise<Recipe[]> {
   const response = await fetch(`https://api.spoonacular.com/recipes/complexSearch?number=50&apiKey=987de0fe95f0494cb10c0d59057bed32`);
@@ -40,7 +36,7 @@ function processRecipe(recipe: Recipe) {
   );
 }
 
-export default async function BlogPage({ searchParams }: BlogPageProps) {
+export default async function BlogPage() {
   const posts = await getRecipes();  // Dohvaćanje svih postova
 
   return (

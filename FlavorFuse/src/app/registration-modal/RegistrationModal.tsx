@@ -12,7 +12,6 @@ type RegistrationModalProps = {
 const RegistrationModal: React.FC<RegistrationModalProps> = ({
   onClose,
   onRegister,
-  ...rest
 }) => {
 
   const [formData, setFormData] = useState({

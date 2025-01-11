@@ -19,6 +19,7 @@ export default function PopularRecipes() {
             <section className="flex flex-wrap justify-center items-center gap-8">
                 {popularRecipes.map((recipe, index) => (
                     <Link
+                        key={index}
                         href={recipe.path}
                         className="text-center text-xl font-bold drop-shadow-md text-[#fde4b5] uppercase"
                     >

@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { BASE_API_URL } from "../constants";
 import type { Recipe } from "../page";
 import './page.css';
 
