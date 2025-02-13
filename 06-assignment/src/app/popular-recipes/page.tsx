@@ -26,7 +26,7 @@ export default function PopularRecipes() {
                     >
                         <div
                             key={index}
-                            className="relative w-full h-40 rounded-lg overflow-hidden shadow-md hover:scale-105 transition-transform duration-300"
+                            className="relative w-full h-44 rounded-lg overflow-hidden shadow-md hover:scale-105 transition-transform duration-300"
                         >
                             {/* Slika recepta */}
                             <Image
