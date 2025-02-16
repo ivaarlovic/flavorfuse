@@ -30,7 +30,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <Link
+        <link
           href="https://fonts.googleapis.com/css2?family=Italianno&display=swap"
           rel="stylesheet"
         />
