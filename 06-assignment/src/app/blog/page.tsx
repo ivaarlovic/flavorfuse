@@ -1,7 +1,5 @@
 "use client";
 
-// @ts-nocheck
-
 import { useState, useEffect } from 'react';
 import { createClient, Entry, Asset } from 'contentful';
 import Image from 'next/image';
@@ -94,9 +92,11 @@ const BlogPage = () => {
 
             {recipe.fields.slikaRecepta && (
               <Image
-                src={typeof recipe.fields.slikaRecepta.fields.file.url === 'string' ? recipe.fields.slikaRecepta.fields.file.url : ''}
+                src={typeof recipe.fields.slikaRecepta.fields.file.url === 'string' && recipe.fields.slikaRecepta.fields.file.url.startsWith('//') ? `https:${recipe.fields.slikaRecepta.fields.file.url}` : recipe.fields.slikaRecepta.fields.file.url as string}
                 alt={recipe.fields.nazivRecepta}
                 className="w-full h-48 object-cover rounded-lg mb-4"
+                width={500}
+                height={300}
               />
             )}
 

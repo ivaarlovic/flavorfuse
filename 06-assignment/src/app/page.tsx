@@ -44,7 +44,7 @@ export default function Home() {
         <Image
           src="/images/list.png"
           alt="cvijet"
-          className="absolute top-[50px] left-[50px] hidden lg:block"
+          className="absolute top-[-50px] left-[-50px] hidden lg:block"
           width={96}
           height={50}
         />

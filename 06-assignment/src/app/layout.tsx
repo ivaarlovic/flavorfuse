@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import "./globals.css";
 import Navbar from "./navbar/Navbar";
 import Footer from "./footer/page";
@@ -29,7 +30,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <link
+        <Link
           href="https://fonts.googleapis.com/css2?family=Italianno&display=swap"
           rel="stylesheet"
         />
