@@ -28,12 +28,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <head>
-        <link
-          href="https://fonts.googleapis.com/css2?family=Italianno&display=swap"
-          rel="stylesheet"
-        />
-      </head>
+      <head />
+      
       <body
          className="grid grid-rows-[auto_1fr_auto] min-h-screen sm:grid-rows-[auto_1fr_auto]" 
       >
