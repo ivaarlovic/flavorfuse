@@ -7,14 +7,11 @@ import PopularRecipes from "./popular-recipes/page";
 import FaqComponent from "./FAQs/page";
 import Image from "next/image";
 
-
-
 export default function Home() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [userInitials, setUserInitials] = useState<string | null>(null);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const [isRegistered, setIsRegistered] = useState(false); // novo stanje
-
+  const [isRegistered, setIsRegistered] = useState(false);
 
   const handleRegister = (name: string) => {
     const initials = name
@@ -34,24 +31,24 @@ export default function Home() {
     setUserInitials(null);
     setIsRegistered(false);
     setIsDropdownOpen(false);
-  }
+  };
 
   return (
-    <main className="grid grid-rows-[auto_auto_auto] min-h-screen text-[#2E6431]">
+    <main className="grid grid-rows-[auto_auto_auto] min-h-screen text-[#2E6431] justify-center px-4 sm:px-8">
       {/* Hero sekcija */}
-      <div className="relative flex flex-col items-center justify-center text-center my-16 px-4 sm:px-8">
+      <div className="relative flex flex-col items-center justify-center text-center my-16">
         {/* Slike sa strane */}
         <Image
           src="/images/list.png"
           alt="cvijet"
-          className="absolute top-[-50px] left-[-50px] hidden lg:block"
+          className="absolute top-[60px] left-[10px] hidden lg:block"
           width={96}
           height={50}
         />
         <Image
           src="/images/naranca.png"
           alt="Naranča"
-          className="absolute top-[0px] left-[200px] hidden lg:block"
+          className="absolute top-[-30px] left-[150px] hidden lg:block"
           width={96}
           height={50}
         />
@@ -65,14 +62,14 @@ export default function Home() {
         <Image
           src="/images/prilog.png"
           alt="prilog"
-          className="absolute top-[-50px] right-[150px] hidden lg:block"
+          className="absolute top-[-70px] right-[150px] hidden lg:block"
           width={160}
           height={100}
         />
         <Image
           src="/images/avokado.png"
           alt="Avokado"
-          className="absolute top-[50px] right-[50px] hidden lg:block"
+          className="absolute top-[60px] right-[5px] hidden lg:block"
           width={96}
           height={50}
         />
@@ -136,7 +133,6 @@ export default function Home() {
           )}
         </div>
       )}
-
 
       <h1 className="items-center justify-center text-center font-italianno text-[#b2823b] text-4xl font-bold drop-shadow-md my-16">POZNATI RECEPTI</h1>
       {/* Kategorije poznatih recepata */}

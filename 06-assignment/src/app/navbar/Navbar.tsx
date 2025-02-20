@@ -5,12 +5,12 @@ import Image from "next/image";
 
 type Page = {
   title: string;
-  path: `/${string}`;
+  path: string;
 };
 
 const pages: Page[] = [
   { title: "HOME", path: "/" },
-  { title: "RECEPTI", path:"/ " },
+  { title: "RECEPTI", path: "#" }, // Updated path to "#" since the page no longer exists
   { title: "BLOG", path: "/blog" },
   { title: "KONTAKT", path: "/kontakt" },
   { title: "PRIJAVA", path: "/prijava" },
@@ -30,6 +30,7 @@ const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [dropdownTimeout, setDropdownTimeout] = useState<NodeJS.Timeout | null>(null);
+  const [mobileDropdownOpen, setMobileDropdownOpen] = useState(false);
 
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
@@ -46,8 +47,12 @@ const Navbar = () => {
   const handleMouseLeave = () => {
     const timeout = setTimeout(() => {
       setDropdownOpen(false);
-    },500);
+    }, 500);
     setDropdownTimeout(timeout);
+  };
+
+  const toggleMobileDropdown = () => {
+    setMobileDropdownOpen(!mobileDropdownOpen);
   };
 
   return (
@@ -84,6 +89,20 @@ const Navbar = () => {
                   onMouseLeave={handleMouseLeave}
                 >
                   {page.title}
+                  <svg
+                    className="w-4 h-4 inline-block ml-1"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M19 9l-7 7-7-7"
+                    />
+                  </svg>
                   {dropdownOpen && (
                     <ul
                       className="absolute z-50 left-0 top-full bg-white shadow-lg border mt-2 rounded-lg w-56"
@@ -147,9 +166,42 @@ const Navbar = () => {
         <ul className="lg:hidden bg-white w-full py-3 px-4 space-y-3">
           {pages.map((page, index) => (
             <li key={index} className="text-black font-bold hover:text-[#2E6431]">
-              <Link href={page.path} onClick={() => setMenuOpen(false)}>
-                {page.title}
-              </Link>
+              {page.title === "RECEPTI" ? (
+                <>
+                  <div className="flex justify-between items-center" onClick={toggleMobileDropdown}>
+                    <span>{page.title}</span>
+                    <svg
+                      className={`w-4 h-4 ml-1 transform ${mobileDropdownOpen ? 'rotate-180' : ''}`}
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M19 9l-7 7-7-7"
+                      />
+                    </svg>
+                  </div>
+                  {mobileDropdownOpen && (
+                    <ul className="pl-4 mt-2 space-y-2">
+                      {categories.map((category, i) => (
+                        <li key={i} className="text-gray-800 hover:text-[#2E6431]">
+                          <Link href={category.path} onClick={() => setMenuOpen(false)}>
+                            {category.title}
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </>
+              ) : (
+                <Link href={page.path} onClick={() => setMenuOpen(false)}>
+                  {page.title}
+                </Link>
+              )}
             </li>
           ))}
           <li>

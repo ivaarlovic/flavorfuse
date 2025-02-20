@@ -67,6 +67,9 @@ const mapEntryToRecept = (entry: Entry<Recept>): Recept => {
 
 const ZdraviReceptiPage = () => {
   const [recipes, setRecipes] = useState<Recept[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [selectedRecipe, setSelectedRecipe] = useState<Recept | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const searchParams = useSearchParams(); // Get the category filter from the URL
   const selectedCategory = searchParams.get('category') || ''; // Category from URL (Torte, Kolači, etc.)
   const selectedSubcategory = searchParams.get('subcategory') || ''; // Subcategory from URL (e.g., Torte)
@@ -87,11 +90,28 @@ const ZdraviReceptiPage = () => {
         } else {
           setRecipes(filteredRecipes);
         }
+        setLoading(false);
       })
       .catch((error) => {
         console.error('Error fetching content from Contentful', error);
+        setLoading(false);
       });
   }, [selectedCategory, selectedSubcategory]); // Re-run effect when category or subcategory changes
+
+  const clearFilters = () => {
+    window.location.href = '/recipes/brzo-i-jednostavno';
+  };
+
+  const openModal = (recipe: Recept) => {
+    setSelectedRecipe(recipe);
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setSelectedRecipe(null);
+  };
+
 
   return (
     <main className="grid grid-rows-[auto_auto_auto] min-h-screen text-[#2E6431] justify-center">
@@ -142,10 +162,10 @@ const ZdraviReceptiPage = () => {
         />
         <h1 className="text-[#2E6431] font-scintilla font-extrabold text-2xl sm:text-3xl md:text-4xl mb-2 drop-shadow-lg">Zdravi recepti</h1>
         <p className="text-base sm:text-lg md:text-xl font-sans m-6 text-gray-900 max-w-[90%] md:max-w-[700px]">
-        Ovdje ćete pronaći recepte bogate vitaminima, vlaknima i esencijalnim nutrijentima, idealne za one koji žele održati zdrav način života. 
-        Bilo da se radi o laganim salatama, smoothie-ima, juhama ili punim obrocima, svaki recept je dizajniran da vam pruži energiju i podrži vaše zdravlje. 
-        Korištenje svježih, prirodnih sastojaka čini ove recepte izvrsnim izborom za održavanje ravnoteže u prehrani. 
-        Ova kategorija nije samo za one koji žele smršavjeti, već i za sve koji žele uživati u hrskavim, sočnim i ukusnim jelima bez osjećaja krivnje.
+          Ovdje ćete pronaći recepte bogate vitaminima, vlaknima i esencijalnim nutrijentima, idealne za one koji žele održati zdrav način života.
+          Bilo da se radi o laganim salatama, smoothie-ima, juhama ili punim obrocima, svaki recept je dizajniran da vam pruži energiju i podrži vaše zdravlje.
+          Korištenje svježih, prirodnih sastojaka čini ove recepte izvrsnim izborom za održavanje ravnoteže u prehrani.
+          Ova kategorija nije samo za one koji žele smršavjeti, već i za sve koji žele uživati u hrskavim, sočnim i ukusnim jelima bez osjećaja krivnje.
         </p>
       </div>
 
@@ -163,13 +183,25 @@ const ZdraviReceptiPage = () => {
         <Link href="/recipes/zdravi-recepti?subcategory=Prehrana za sportaše">
           <button className="px-6 py-2 bg-gray-200 rounded-full text-gray-800 hover:bg-gray-300">Prehrana za sportaše</button>
         </Link>
+
+        {/* Clear Filters Button */}
+        <button onClick={clearFilters} className="px-6 py-2 bg-red-200 rounded-full text-red-800 hover:bg-red-300">
+          Ukloni filtriranje
+        </button>
       </div>
 
       {/* Recipes */}
       <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 w-full max-w-6xl">
-        {recipes.map((recipe) => (
-          <Link href={`/recipes/deserti/${recipe.sys.id}`} key={recipe.sys.id}>
-            <div className="bg-white shadow-lg rounded-xl overflow-hidden transition-transform transform hover:scale-105 hover:shadow-2xl cursor-pointer">
+        {loading ? (
+          Array.from({ length: 6 }).map((_, index) => (
+            <div key={index} className="bg-gray-200 animate-pulse h-48 rounded-xl"></div>
+          ))
+        ) : (
+          recipes.map((recipe) => (
+            <div
+              key={recipe.sys.id}
+              className="bg-white shadow-lg rounded-xl overflow-hidden transition-transform transform hover:scale-105 hover:shadow-2xl cursor-pointer"
+              onClick={() => openModal(recipe)}>
               {recipe.fields.slikaRecepta && (
                 <Image
                   src={`https:${recipe.fields.slikaRecepta.fields.file.url}`}
@@ -186,9 +218,50 @@ const ZdraviReceptiPage = () => {
                 </p>
               </div>
             </div>
-          </Link>
-        ))}
+          )))}
       </div>
+      {isModalOpen && selectedRecipe && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50" onClick={closeModal}>
+          <div className="bg-white p-8 rounded-xl shadow-xl max-w-4xl w-full max-h-[90vh] overflow-y-auto relative flex flex-col md:flex-row space-x-4" onClick={(e) => e.stopPropagation()}>
+            <button onClick={closeModal} className="absolute top-4 right-4 text-gray-600 hover:text-gray-800 text-3xl transition-transform transform hover:scale-110">&times;</button>
+
+            {selectedRecipe.fields.slikaRecepta && (
+              <div className="md:w-1/2 flex justify-center items-center p-4">
+                <div className="w-full h-96 relative">
+                  <Image
+                    src={`https:${selectedRecipe.fields.slikaRecepta.fields.file.url}`}
+                    alt={selectedRecipe.fields.nazivRecepta}
+                    layout="fill"
+                    objectFit="cover"
+                    className="rounded-lg"
+                  />
+                </div>
+              </div>
+            )}
+
+            <div className="md:w-1/2 p-4 text-gray-700">
+              <h2 className="text-center text-3xl font-bold text-gray-800 mb-4">{selectedRecipe.fields.nazivRecepta}</h2>
+
+              <h3 className="text-lg font-semibold mb-2">Sastojci</h3>
+              <ul className="list-none space-y-2 text-gray-700 pl-4">
+                {selectedRecipe.fields.sastojci.split('\n').map((item, index) => (
+                  <li key={index} className="text-gray-700">{item.replace(/^[•-]\s?/, '')}</li>
+                ))}
+              </ul>
+
+              <h3 className="text-lg font-semibold mt-4 mb-2">Upute za pripremu</h3>
+              <ol className="list-none list-inside space-y-2 text-gray-700 pl-4">
+                {selectedRecipe.fields.uputeZaPripremu.split('\n').map((step, index) => (
+                  <li key={index} className="text-gray-700">{step.replace(/^[•-]\s?/, '')}</li>
+                ))}
+              </ol>
+
+              <h3 className="text-lg font-semibold mt-4 mb-2">Opis</h3>
+              <p className="text-gray-700">{selectedRecipe.fields.opisRecepta}</p>
+            </div>
+          </div>
+        </div>
+      )}
     </main>
   );
 };

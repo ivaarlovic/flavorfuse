@@ -17,7 +17,7 @@ body,html {
   overflow-y: auto;
   overflow-x: hidden;
   height: 100%;
-  background-color:#FFFAF1;
+  background-color:#ffedcf;
   font-family: sans-serif;
   scroll-behavior: smooth;
   @apply min-h-screen bg-[#ffffff] text-[#2E6431] font-sans flex flex-col;
