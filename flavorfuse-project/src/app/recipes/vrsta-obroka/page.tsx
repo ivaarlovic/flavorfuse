@@ -65,7 +65,7 @@ const mapEntryToRecept = (entry: Entry<Recept>): Recept => {
   };
 };
 
-const DesertiPage = () => {
+const PremaVrstiObrokaPage = () => {
   const [recipes, setRecipes] = useState<Recept[]>([]);
   const [loading, setLoading] = useState(true);
   const [selectedRecipe, setSelectedRecipe] = useState<Recept | null>(null);
@@ -80,7 +80,7 @@ const DesertiPage = () => {
         // First, filter out recipes that belong to 'Deserti' category
         const filteredRecipes = response.items
           .filter((item) => {
-            return Array.isArray(item.fields.kategorija) && item.fields.kategorija.some((kat) => kat.fields.nazivKategorije === 'Deserti');
+            return Array.isArray(item.fields.kategorija) && item.fields.kategorija.some((kat) => kat.fields.nazivKategorije === 'Prema vrsti obroka');
           })
           .map(mapEntryToRecept);
 
@@ -99,7 +99,7 @@ const DesertiPage = () => {
   }, [selectedCategory, selectedSubcategory]); // Re-run effect when category or subcategory changes
 
   const clearFilters = () => {
-    window.location.href = '/recipes/brzo-i-jednostavno';
+    window.location.href = '/recipes/vrsta-obroka';
   };
 
   const openModal = (recipe: Recept) => {
@@ -160,30 +160,26 @@ const DesertiPage = () => {
           width={112}
           height={60}
         />
-        <h1 className="text-[#2E6431] font-scintilla font-extrabold text-2xl sm:text-3xl md:text-4xl mb-2 drop-shadow-lg">Deserti</h1>
+        <h1 className="text-[#2E6431] font-scintilla font-extrabold text-2xl sm:text-3xl md:text-4xl mb-2 drop-shadow-lg">Prema vrsti obroka</h1>
         <p className="text-base sm:text-lg md:text-xl font-sans m-6 text-gray-900 max-w-[90%] md:max-w-[700px]">
-          Deserti su slatki ili bogati obroci koji se obično poslužuju nakon glavnog jela.
-          Često uključuju sastojke poput čokolade, voća, mlijeka, jaja i brašna, a mogu biti pečeni ili hladni.
-          Popularni deserti uključuju kolače, torte, pudinge, voćne salate i sladolede.
-          Oni su savršen način da se završi obrok, donoseći uživanje i zadovoljstvo.
-          Osim što su ukusni, deserti često služe i kao središnji dio proslava i posebnih prigoda.
+          Bilo da se radi o energičnom doručku koji započinje dan, brzom ručku za užurbane trenutke, ili opuštajućoj večeri s obitelji, ovdje ćete pronaći jela koja odgovaraju svakoj situaciji.
+          Jela u ovoj kategoriji mogu biti lagana, hranjiva i savršena za početak dana, ali i bogata i zasitna, idealna za veće obroke.
+          Bilo da tražite brzu užinu ili planirate obiteljski obrok, ova kategorija nudi raznovrsne opcije koje će zadovoljiti sve vaše kulinarske potrebe.
         </p>
       </div>
 
       {/* Filter Buttons */}
       <div className="mt-8 w-full max-w-6xl flex flex-wrap justify-center gap-4">
-        <Link href="/recipes/deserti?subcategory=Torte">
-          <button className="px-6 py-2 bg-gray-200 rounded-full text-gray-800 hover:bg-gray-300">Torte</button>
+        <Link href="/recipes/vrsta-obroka?subcategory=Doručak">
+          <button className="px-6 py-2 bg-gray-200 rounded-full text-gray-800 hover:bg-gray-300">Doručak</button>
         </Link>
-        <Link href="/recipes/deserti?subcategory=Kolači">
-          <button className="px-6 py-2 bg-gray-200 rounded-full text-gray-800 hover:bg-gray-300">Kolači</button>
+        <Link href="/recipes/vrsta-obroka?subcategory=Ručak">
+          <button className="px-6 py-2 bg-gray-200 rounded-full text-gray-800 hover:bg-gray-300">Ručak</button>
         </Link>
-        <Link href="/recipes/deserti?subcategory=Deserti u čaši">
-          <button className="px-6 py-2 bg-gray-200 rounded-full text-gray-800 hover:bg-gray-300">Deserti u čaši</button>
+        <Link href="/recipes/vrsta-obroka?subcategory=Večera">
+          <button className="px-6 py-2 bg-gray-200 rounded-full text-gray-800 hover:bg-gray-300">Večera</button>
         </Link>
-        <Link href="/recipes/deserti?subcategory=Deserti do 5 sastojaka">
-          <button className="px-6 py-2 bg-gray-200 rounded-full text-gray-800 hover:bg-gray-300">Deserti do 5 sastojaka</button>
-        </Link>
+
         {/* Clear Filters Button */}
         <button onClick={clearFilters} className="px-6 py-2 bg-red-200 rounded-full text-red-800 hover:bg-red-300">
           Ukloni filtriranje
@@ -192,7 +188,7 @@ const DesertiPage = () => {
 
       {/* Recipes */}
       <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 w-full max-w-6xl">
-        {loading ? (
+      {loading ? (
           Array.from({ length: 6 }).map((_, index) => (
             <div key={index} className="bg-gray-200 animate-pulse h-48 rounded-xl"></div>
           ))
@@ -202,7 +198,7 @@ const DesertiPage = () => {
               key={recipe.sys.id}
               className="bg-white shadow-lg rounded-xl overflow-hidden transition-transform transform hover:scale-105 hover:shadow-2xl cursor-pointer"
               onClick={() => openModal(recipe)}>
-              {recipe.fields.slikaRecepta && (
+         {recipe.fields.slikaRecepta && (
                 <Image
                   src={`https:${recipe.fields.slikaRecepta.fields.file.url}`}
                   alt={recipe.fields.nazivRecepta}
@@ -218,7 +214,7 @@ const DesertiPage = () => {
                 </p>
               </div>
             </div>
-          )))}
+        )))}
       </div>
       {isModalOpen && selectedRecipe && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50" onClick={closeModal}>
@@ -270,7 +266,7 @@ const DesertiPage = () => {
 export default function Page() {
   return (
     <Suspense fallback={<div>Učitavanje...</div>}>
-      <DesertiPage />
+      <PremaVrstiObrokaPage />
     </Suspense>
   );
 }

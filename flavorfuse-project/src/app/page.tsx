@@ -2,26 +2,16 @@
 
 import Recipes from "./recipes/page";
 import { useState } from "react";
-import RegistrationModal from "./registration-modal/RegistrationModal";
 import PopularRecipes from "./popular-recipes/page";
 import FaqComponent from "./FAQs/page";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const [userInitials, setUserInitials] = useState<string | null>(null);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isRegistered, setIsRegistered] = useState(false);
-
-  const handleRegister = (name: string) => {
-    const initials = name
-      .split(" ")
-      .map((word) => word[0])
-      .join("")
-      .toUpperCase();
-    setUserInitials(initials);
-    setIsRegistered(true);
-  };
+  const router = useRouter();
 
   const handleDropdownToggle = () => {
     setIsDropdownOpen((prev) => !prev);
@@ -33,8 +23,12 @@ export default function Home() {
     setIsDropdownOpen(false);
   };
 
+  const handleLoginClick = () => {
+    router.push("/prijava");
+  };
+
   return (
-    <main className="grid grid-rows-[auto_auto_auto] min-h-screen text-[#2E6431] justify-center px-4 sm:px-8">
+    <main className="grid grid-rows-[auto_auto_auto] min-h-screen text-[#2E6431] justify-center sm:px-8">
       {/* Hero sekcija */}
       <div className="relative flex flex-col items-center justify-center text-center my-16">
         {/* Slike sa strane */}
@@ -90,20 +84,12 @@ export default function Home() {
         {!isRegistered && (
           <button
             className="px-4 py-2 sm:px-5 sm:py-3 text-sm sm:text-lg bg-[#fde4b5] text-gray-900 border-2 border-[#b2823b] rounded-full hover:scale-105 transition-transform duration-300"
-            onClick={() => setIsModalOpen(true)}
+            onClick={handleLoginClick}
           >
-            Registriraj se
+            Prijavi se
           </button>
         )}
       </div>
-
-      {/* Modal za registraciju */}
-      {isModalOpen && (
-        <RegistrationModal
-          onClose={() => setIsModalOpen(false)}
-          onRegister={handleRegister}
-        />
-      )}
 
       {/* Prikaz inicijala u gornjem desnom kutu */}
       {userInitials && (

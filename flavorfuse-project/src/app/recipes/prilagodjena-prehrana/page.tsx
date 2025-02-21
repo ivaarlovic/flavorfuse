@@ -65,7 +65,7 @@ const mapEntryToRecept = (entry: Entry<Recept>): Recept => {
   };
 };
 
-const PripremaUnaprijedPage = () => {
+const PrilagodenaPrehranaPage = () => {
   const [recipes, setRecipes] = useState<Recept[]>([]);
   const [loading, setLoading] = useState(true);
   const [selectedRecipe, setSelectedRecipe] = useState<Recept | null>(null);
@@ -80,7 +80,7 @@ const PripremaUnaprijedPage = () => {
         // First, filter out recipes that belong to 'Deserti' category
         const filteredRecipes = response.items
           .filter((item) => {
-            return Array.isArray(item.fields.kategorija) && item.fields.kategorija.some((kat) => kat.fields.nazivKategorije === 'Jela za pripremu unaprijed');
+            return Array.isArray(item.fields.kategorija) && item.fields.kategorija.some((kat) => kat.fields.nazivKategorije === 'Prilagođena prehrana');
           })
           .map(mapEntryToRecept);
 
@@ -99,7 +99,7 @@ const PripremaUnaprijedPage = () => {
   }, [selectedCategory, selectedSubcategory]); // Re-run effect when category or subcategory changes
 
   const clearFilters = () => {
-    window.location.href = '/recipes/brzo-i-jednostavno';
+    window.location.href = '/recipes/prilagodjena-prehrana';
   };
 
   const openModal = (recipe: Recept) => {
@@ -111,6 +111,7 @@ const PripremaUnaprijedPage = () => {
     setIsModalOpen(false);
     setSelectedRecipe(null);
   };
+
 
   return (
     <main className="grid grid-rows-[auto_auto_auto] min-h-screen text-[#2E6431] justify-center">
@@ -159,27 +160,28 @@ const PripremaUnaprijedPage = () => {
           width={112}
           height={60}
         />
-        <h1 className="text-[#2E6431] font-scintilla font-extrabold text-2xl sm:text-3xl md:text-4xl mb-2 drop-shadow-lg">Jela za pripremu unaprijed</h1>
+        <h1 className="text-[#2E6431] font-scintilla font-extrabold text-2xl sm:text-3xl md:text-4xl mb-2 drop-shadow-lg">Prilagođena prehrana</h1>
         <p className="text-base sm:text-lg md:text-xl font-sans m-6 text-gray-900 max-w-[90%] md:max-w-[700px]">
-          Kategorija Jela za pripremu unaprijed uključuje recepte koji su idealni za planiranje obroka unaprijed, štedeći vrijeme i energiju tokom radnog tjedna.
-          Ova jela mogu se pripremiti u većim količinama i pohraniti za kasniju upotrebu, bilo u hladnjaku ili zamrzivaču, čime se osigurava brza i praktična rješenja za obrok.
-          Bilo da se radi o ručkovima, večerama ili međuobrocima, jela za pripremu unaprijed omogućuju organizaciju prehrane bez stresa.
-          Savršena su za zaposlene osobe koje žele zdrav i ukusan obrok, bez potrebe za svakodnevnim kuhanjem.
+          Kategorija Prilagođena prehrana obuhvaća recepte koji su osmišljeni kako bi zadovoljili specifične prehrambene potrebe ili ograničenja.
+          Ovi recepti mogu biti prilagođeni osobama s alergijama, intolerancijama, dijabetesom, ili onima koji prate specifične načine prehrane poput bezglutenske, veganske ili vegetarijanske.
+          Cilj je pružiti ukusne obroke koji ne samo da zadovoljavaju nutritivne zahtjeve, već i omogućuju uživanje u hrani bez kompromisa
         </p>
       </div>
 
       {/* Filter Buttons */}
       <div className="mt-8 w-full max-w-6xl flex flex-wrap justify-center gap-4">
-        <Link href="/recipes/priprema-unaprijed?subcategory=Za cijeli tjedan">
-          <button className="px-6 py-2 bg-gray-200 rounded-full text-gray-800 hover:bg-gray-300">Za cijeli tjedan</button>
+        <Link href="/recipes/prilagodjena-prehrana?subcategory=Vegansko">
+          <button className="px-6 py-2 bg-gray-200 rounded-full text-gray-800 hover:bg-gray-300">Vegansko</button>
         </Link>
-        <Link href="/recipes/priprema-unaprijed?subcategory=Dugi rok trajanja">
-          <button className="px-6 py-2 bg-gray-200 rounded-full text-gray-800 hover:bg-gray-300">Dugi rok trajanja</button>
+        <Link href="/recipes/prilagodjena-prehrana?subcategory=Vegetarijansko">
+          <button className="px-6 py-2 bg-gray-200 rounded-full text-gray-800 hover:bg-gray-300">Vegetarijansko</button>
         </Link>
-        <Link href="/recipes/priprema-unaprijed?subcategory=Za putovanje">
-          <button className="px-6 py-2 bg-gray-200 rounded-full text-gray-800 hover:bg-gray-300">Za putovanje</button>
+        <Link href="/recipes/prilagodjena-prehrana?subcategory=Bez glutena">
+          <button className="px-6 py-2 bg-gray-200 rounded-full text-gray-800 hover:bg-gray-300">Bez glutena</button>
         </Link>
-
+        <Link href="/recipes/prilagodjena-prehrana?subcategory=Bez laktoze">
+          <button className="px-6 py-2 bg-gray-200 rounded-full text-gray-800 hover:bg-gray-300">Bez laktoze</button>
+        </Link>
         {/* Clear Filters Button */}
         <button onClick={clearFilters} className="px-6 py-2 bg-red-200 rounded-full text-red-800 hover:bg-red-300">
           Ukloni filtriranje
@@ -198,23 +200,22 @@ const PripremaUnaprijedPage = () => {
               key={recipe.sys.id}
               className="bg-white shadow-lg rounded-xl overflow-hidden transition-transform transform hover:scale-105 hover:shadow-2xl cursor-pointer"
               onClick={() => openModal(recipe)}>
-            {recipe.fields.slikaRecepta && (
-              <Image
-                src={`https:${recipe.fields.slikaRecepta.fields.file.url}`}
-                alt={recipe.fields.nazivRecepta}
-                width={400}
-                height={250}
-                className="w-full h-48 object-cover"
-              />
-            )}
-            <div className="p-4">
-              <h2 className="text-xl font-semibold text-gray-900">{recipe.fields.nazivRecepta}</h2>
-              <p className="text-gray-600 mt-2">
-                {recipe.fields.opisRecepta ? recipe.fields.opisRecepta.slice(0, 100) + "..." : "Kliknite za više."}
-              </p>
+              {recipe.fields.slikaRecepta && (
+                <Image
+                  src={`https:${recipe.fields.slikaRecepta.fields.file.url}`}
+                  alt={recipe.fields.nazivRecepta}
+                  width={400}
+                  height={250}
+                  className="w-full h-48 object-cover"
+                />
+              )}
+              <div className="p-4">
+                <h2 className="text-xl font-semibold text-gray-900">{recipe.fields.nazivRecepta}</h2>
+                <p className="text-gray-600 mt-2">
+                  {recipe.fields.opisRecepta ? recipe.fields.opisRecepta.slice(0, 100) + "..." : "Kliknite za više."}
+                </p>
+              </div>
             </div>
-          </div>
-
         )))}
       </div>
       {isModalOpen && selectedRecipe && (
@@ -267,7 +268,7 @@ const PripremaUnaprijedPage = () => {
 export default function Page() {
   return (
     <Suspense fallback={<div>Učitavanje...</div>}>
-      <PripremaUnaprijedPage />
+      <PrilagodenaPrehranaPage />
     </Suspense>
   );
 }

@@ -65,7 +65,7 @@ const mapEntryToRecept = (entry: Entry<Recept>): Recept => {
   };
 };
 
-const ZdraviReceptiPage = () => {
+const TradicionalnaJelaPage = () => {
   const [recipes, setRecipes] = useState<Recept[]>([]);
   const [loading, setLoading] = useState(true);
   const [selectedRecipe, setSelectedRecipe] = useState<Recept | null>(null);
@@ -80,7 +80,7 @@ const ZdraviReceptiPage = () => {
         // First, filter out recipes that belong to 'Deserti' category
         const filteredRecipes = response.items
           .filter((item) => {
-            return Array.isArray(item.fields.kategorija) && item.fields.kategorija.some((kat) => kat.fields.nazivKategorije === 'Zdravi recepti');
+            return Array.isArray(item.fields.kategorija) && item.fields.kategorija.some((kat) => kat.fields.nazivKategorije === 'Tradicionalna jela');
           })
           .map(mapEntryToRecept);
 
@@ -99,7 +99,7 @@ const ZdraviReceptiPage = () => {
   }, [selectedCategory, selectedSubcategory]); // Re-run effect when category or subcategory changes
 
   const clearFilters = () => {
-    window.location.href = '/recipes/brzo-i-jednostavno';
+    window.location.href = '/recipes/tradicionalna-jela';
   };
 
   const openModal = (recipe: Recept) => {
@@ -160,28 +160,25 @@ const ZdraviReceptiPage = () => {
           width={112}
           height={60}
         />
-        <h1 className="text-[#2E6431] font-scintilla font-extrabold text-2xl sm:text-3xl md:text-4xl mb-2 drop-shadow-lg">Zdravi recepti</h1>
+        <h1 className="text-[#2E6431] font-scintilla font-extrabold text-2xl sm:text-3xl md:text-4xl mb-2 drop-shadow-lg">Tradicionalna jela</h1>
         <p className="text-base sm:text-lg md:text-xl font-sans m-6 text-gray-900 max-w-[90%] md:max-w-[700px]">
-          Ovdje ćete pronaći recepte bogate vitaminima, vlaknima i esencijalnim nutrijentima, idealne za one koji žele održati zdrav način života.
-          Bilo da se radi o laganim salatama, smoothie-ima, juhama ili punim obrocima, svaki recept je dizajniran da vam pruži energiju i podrži vaše zdravlje.
-          Korištenje svježih, prirodnih sastojaka čini ove recepte izvrsnim izborom za održavanje ravnoteže u prehrani.
-          Ova kategorija nije samo za one koji žele smršavjeti, već i za sve koji žele uživati u hrskavim, sočnim i ukusnim jelima bez osjećaja krivnje.
+          Tradicionalna jela donose recepte koji slave bogatstvo kulinarske baštine i običaja različitih kultura.
+          Ova jela često koriste sastojke i tehnike pripreme koje su se prenosile generacijama, zadržavajući autentične okuse i mirise.
+          Bilo da se radi o domaćim specijalitetima ili klasičnim jelima s nekog specifičnog područja, tradicionalna jela nude osjećaj povezanosti s prošlim vremenima.
+          Svaki recept u ovoj kategoriji nosi priču i sjećanje na obiteljska okupljanja i proslave, stvarajući toplinu i udobnost na stolu.
         </p>
       </div>
 
       {/* Filter Buttons */}
       <div className="mt-8 w-full max-w-6xl flex flex-wrap justify-center gap-4">
-        <Link href="/recipes/zdravi-recepti?subcategory=Zdravi deserti">
-          <button className="px-6 py-2 bg-gray-200 rounded-full text-gray-800 hover:bg-gray-300">Zdravi deserti</button>
+        <Link href="/recipes/tradicionalna-jela?subcategory=Blagdanska jela">
+          <button className="px-6 py-2 bg-gray-200 rounded-full text-gray-800 hover:bg-gray-300">Blagdanska jela</button>
         </Link>
-        <Link href="/recipes/zdravi-recepti?subcategory=Obroci za mršavljenje">
-          <button className="px-6 py-2 bg-gray-200 rounded-full text-gray-800 hover:bg-gray-300">Obroci za mršavljenje</button>
+        <Link href="/recipes/tradicionalna-jela?subcategory=Sezonska jela">
+          <button className="px-6 py-2 bg-gray-200 rounded-full text-gray-800 hover:bg-gray-300">Sezonska jela</button>
         </Link>
-        <Link href="/recipes/zdravi-recepti?subcategory=Zdravi napitci">
-          <button className="px-6 py-2 bg-gray-200 rounded-full text-gray-800 hover:bg-gray-300">Zdravi napitci</button>
-        </Link>
-        <Link href="/recipes/zdravi-recepti?subcategory=Prehrana za sportaše">
-          <button className="px-6 py-2 bg-gray-200 rounded-full text-gray-800 hover:bg-gray-300">Prehrana za sportaše</button>
+        <Link href="/recipes/tradicionalna-jela?subcategory=Zimnica">
+          <button className="px-6 py-2 bg-gray-200 rounded-full text-gray-800 hover:bg-gray-300">Zimnica</button>
         </Link>
 
         {/* Clear Filters Button */}
@@ -192,7 +189,7 @@ const ZdraviReceptiPage = () => {
 
       {/* Recipes */}
       <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 w-full max-w-6xl">
-        {loading ? (
+      {loading ? (
           Array.from({ length: 6 }).map((_, index) => (
             <div key={index} className="bg-gray-200 animate-pulse h-48 rounded-xl"></div>
           ))
@@ -202,7 +199,7 @@ const ZdraviReceptiPage = () => {
               key={recipe.sys.id}
               className="bg-white shadow-lg rounded-xl overflow-hidden transition-transform transform hover:scale-105 hover:shadow-2xl cursor-pointer"
               onClick={() => openModal(recipe)}>
-              {recipe.fields.slikaRecepta && (
+               {recipe.fields.slikaRecepta && (
                 <Image
                   src={`https:${recipe.fields.slikaRecepta.fields.file.url}`}
                   alt={recipe.fields.nazivRecepta}
@@ -218,7 +215,7 @@ const ZdraviReceptiPage = () => {
                 </p>
               </div>
             </div>
-          )))}
+        )))}
       </div>
       {isModalOpen && selectedRecipe && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50" onClick={closeModal}>
@@ -270,7 +267,7 @@ const ZdraviReceptiPage = () => {
 export default function Page() {
   return (
     <Suspense fallback={<div>Učitavanje...</div>}>
-      <ZdraviReceptiPage />
+      <TradicionalnaJelaPage />
     </Suspense>
   );
 }

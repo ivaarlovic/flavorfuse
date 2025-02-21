@@ -112,14 +112,14 @@ const BrzoIJednostavnoPage = () => {
   };
 
   return (
-    <main className="grid grid-rows-[auto_auto_auto] min-h-screen text-[#2E6431] justify-center ">
+    <main className="grid grid-rows-[auto_auto_auto] min-h-screen text-[#2E6431] justify-center w-full max-w-none ">
       {/* Header Section */}
       <div className="relative flex flex-col items-center justify-center text-center my-16 px-4 sm:px-8">
         {/* Slike sa strane */}
         <Image
           src="/images/list.png"
           alt="cvijet"
-          className="absolute top-[60px] left-[10px] hidden lg:block"
+          className="absolute top-[50px] left-[-50px] hidden lg:block"
           width={96}
           height={50}
         />

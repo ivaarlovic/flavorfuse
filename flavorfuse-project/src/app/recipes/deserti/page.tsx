@@ -65,7 +65,7 @@ const mapEntryToRecept = (entry: Entry<Recept>): Recept => {
   };
 };
 
-const PrilagodenaPrehranaPage = () => {
+const DesertiPage = () => {
   const [recipes, setRecipes] = useState<Recept[]>([]);
   const [loading, setLoading] = useState(true);
   const [selectedRecipe, setSelectedRecipe] = useState<Recept | null>(null);
@@ -80,7 +80,7 @@ const PrilagodenaPrehranaPage = () => {
         // First, filter out recipes that belong to 'Deserti' category
         const filteredRecipes = response.items
           .filter((item) => {
-            return Array.isArray(item.fields.kategorija) && item.fields.kategorija.some((kat) => kat.fields.nazivKategorije === 'Prilagođena prehrana');
+            return Array.isArray(item.fields.kategorija) && item.fields.kategorija.some((kat) => kat.fields.nazivKategorije === 'Deserti');
           })
           .map(mapEntryToRecept);
 
@@ -99,7 +99,7 @@ const PrilagodenaPrehranaPage = () => {
   }, [selectedCategory, selectedSubcategory]); // Re-run effect when category or subcategory changes
 
   const clearFilters = () => {
-    window.location.href = '/recipes/brzo-i-jednostavno';
+    window.location.href = '/recipes/deserti';
   };
 
   const openModal = (recipe: Recept) => {
@@ -160,27 +160,29 @@ const PrilagodenaPrehranaPage = () => {
           width={112}
           height={60}
         />
-        <h1 className="text-[#2E6431] font-scintilla font-extrabold text-2xl sm:text-3xl md:text-4xl mb-2 drop-shadow-lg">Prilagođena prehrana</h1>
+        <h1 className="text-[#2E6431] font-scintilla font-extrabold text-2xl sm:text-3xl md:text-4xl mb-2 drop-shadow-lg">Deserti</h1>
         <p className="text-base sm:text-lg md:text-xl font-sans m-6 text-gray-900 max-w-[90%] md:max-w-[700px]">
-          Kategorija Prilagođena prehrana obuhvaća recepte koji su osmišljeni kako bi zadovoljili specifične prehrambene potrebe ili ograničenja.
-          Ovi recepti mogu biti prilagođeni osobama s alergijama, intolerancijama, dijabetesom, ili onima koji prate specifične načine prehrane poput bezglutenske, veganske ili vegetarijanske.
-          Cilj je pružiti ukusne obroke koji ne samo da zadovoljavaju nutritivne zahtjeve, već i omogućuju uživanje u hrani bez kompromisa
+          Deserti su slatki ili bogati obroci koji se obično poslužuju nakon glavnog jela.
+          Često uključuju sastojke poput čokolade, voća, mlijeka, jaja i brašna, a mogu biti pečeni ili hladni.
+          Popularni deserti uključuju kolače, torte, pudinge, voćne salate i sladolede.
+          Oni su savršen način da se završi obrok, donoseći uživanje i zadovoljstvo.
+          Osim što su ukusni, deserti često služe i kao središnji dio proslava i posebnih prigoda.
         </p>
       </div>
 
       {/* Filter Buttons */}
       <div className="mt-8 w-full max-w-6xl flex flex-wrap justify-center gap-4">
-        <Link href="/recipes/prilagodjena-prehrana?subcategory=Vegansko">
-          <button className="px-6 py-2 bg-gray-200 rounded-full text-gray-800 hover:bg-gray-300">Vegansko</button>
+        <Link href="/recipes/deserti?subcategory=Torte">
+          <button className="px-6 py-2 bg-gray-200 rounded-full text-gray-800 hover:bg-gray-300">Torte</button>
         </Link>
-        <Link href="/recipes/prilagodjena-prehrana?subcategory=Vegetarijansko">
-          <button className="px-6 py-2 bg-gray-200 rounded-full text-gray-800 hover:bg-gray-300">Vegetarijansko</button>
+        <Link href="/recipes/deserti?subcategory=Kolači">
+          <button className="px-6 py-2 bg-gray-200 rounded-full text-gray-800 hover:bg-gray-300">Kolači</button>
         </Link>
-        <Link href="/recipes/prilagodjena-prehrana?subcategory=Bez glutena">
-          <button className="px-6 py-2 bg-gray-200 rounded-full text-gray-800 hover:bg-gray-300">Bez glutena</button>
+        <Link href="/recipes/deserti?subcategory=Deserti u čaši">
+          <button className="px-6 py-2 bg-gray-200 rounded-full text-gray-800 hover:bg-gray-300">Deserti u čaši</button>
         </Link>
-        <Link href="/recipes/prilagodjena-prehrana?subcategory=Bez laktoze">
-          <button className="px-6 py-2 bg-gray-200 rounded-full text-gray-800 hover:bg-gray-300">Bez laktoze</button>
+        <Link href="/recipes/deserti?subcategory=Deserti do 5 sastojaka">
+          <button className="px-6 py-2 bg-gray-200 rounded-full text-gray-800 hover:bg-gray-300">Deserti do 5 sastojaka</button>
         </Link>
         {/* Clear Filters Button */}
         <button onClick={clearFilters} className="px-6 py-2 bg-red-200 rounded-full text-red-800 hover:bg-red-300">
@@ -190,7 +192,7 @@ const PrilagodenaPrehranaPage = () => {
 
       {/* Recipes */}
       <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 w-full max-w-6xl">
-      {loading ? (
+        {loading ? (
           Array.from({ length: 6 }).map((_, index) => (
             <div key={index} className="bg-gray-200 animate-pulse h-48 rounded-xl"></div>
           ))
@@ -216,7 +218,7 @@ const PrilagodenaPrehranaPage = () => {
                 </p>
               </div>
             </div>
-        )))}
+          )))}
       </div>
       {isModalOpen && selectedRecipe && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50" onClick={closeModal}>
@@ -268,7 +270,7 @@ const PrilagodenaPrehranaPage = () => {
 export default function Page() {
   return (
     <Suspense fallback={<div>Učitavanje...</div>}>
-      <PrilagodenaPrehranaPage />
+      <DesertiPage />
     </Suspense>
   );
 }
